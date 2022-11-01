@@ -1,0 +1,72 @@
+from typing import List
+
+board = [
+    "......................",
+    "......##########......",
+    "......#........#......",
+    "......#........#......",
+    "......#........#####..",
+    "....###............#..",
+    "....#............###..",
+    "....##############....",
+]
+
+# print(len(board), len(board[0]))
+# print(board[2])
+# board[2] = list(board[2])
+# print(type(board[0]))
+# print(type(board[2]))
+# board[2][1] = "&"
+# print(board[2])
+# board[2] = "".join(board[2])
+# print(board[2])
+
+print("\nOLD BOARD (str)")
+for b in board:
+    print(b)
+
+a = 0
+while a < len(board):
+    board[a] = list(board[a])
+    a = a + 1
+
+def flood_fill(input_board: List, old: str, new: str, x: int, y: int) -> List:
+    if (x < 0 or x >= len(board) or y < 0 or y >= len(board[0])):
+        #print('error01')
+        return
+    
+    if (board[x][y] != old):
+        #print('error02')
+        return
+
+    board[x][y] = new
+    
+    flood_fill(List, old, new, x + 1, y)
+    flood_fill(List, old, new, x - 1, y)
+    flood_fill(List, old, new, x, y + 1)
+    flood_fill(List, old, new, x, y - 1)
+
+modified_board = flood_fill(input_board=board, old=".", new="~", x=5, y=12)
+
+a = 0
+print('\nNEW BOARD (list)')
+while a < len(board):
+    print(board[a])
+    a = a + 1
+
+a = 0
+print('\nNEW BOARD (str)')
+while a < len(board):
+    board[a] = "".join(board[a])
+    print(board[a])
+    a = a + 1
+
+# Expected output:
+# ......................
+# ......##########......
+# ......#~~~~~~~~#......
+# ......#~~~~~~~~#......
+# ......#~~~~~~~~#####..
+# ....###~~~~~~~~~~~~#..
+# ....#~~~~~~~~~~~~###..
+# ....##############....
